@@ -3,26 +3,31 @@ title: "final_growth"
 output: html_document
 ---
 
-```{r setup, include=FALSE}
+## Load library (ggplot2, datasets) and load ToothGrowth data
+```{r setup, include=FALSE, message=FALSE}
 knitr::opts_chunk$set(echo = TRUE)
+library(ggplot2)
+library(datasets)
+data(ToothGrowth)
+```
+Check the overview of the dataset
+```{r cache=TRUE}
+head(ToothGrowth)
+tail(ToothGrowth)
+dim(ToothGrowth)
+names(ToothGrowth)
+class(ToothGrowth$len)
+class(ToothGrowth$supp) 
+class(ToothGrowth$dose)
+unique(ToothGrowth$supp)
+unique(ToothGrowth$dose)
 ```
 
-## R Markdown
+The supp column is a factor and has two levels - VC and OJ. The dose column is numeric but has only 3 different values (0.5, 1, 2.0). So we can take this column as factor too.
 
-This is an R Markdown document. Markdown is a simple formatting syntax for authoring HTML, PDF, and MS Word documents. For more details on using R Markdown see <http://rmarkdown.rstudio.com>.
+We will start by examing impact of each supplement by its dosage. Multipanel boxplot (by supplement) will provide a good glimpse on the data.
 
-When you click the **Knit** button a document will be generated that includes both content as well as the output of any embedded R code chunks within the document. You can embed an R code chunk like this:
-
-```{r cars}
-summary(cars)
+```{r cache=TRUE}
+g <- ggplot(ToothGrowth, aes(x=factor(dose),y=len, fill=factor(dose)))
+g + geom_boxplot() + facet_grid(.~supp)
 ```
-
-## Including Plots
-
-You can also embed plots, for example:
-
-```{r pressure, echo=FALSE}
-plot(pressure)
-```
-
-Note that the `echo = FALSE` parameter was added to the code chunk to prevent printing of the R code that generated the plot.
