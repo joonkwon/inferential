@@ -1,16 +1,20 @@
 ---
-title: "Simulation"
+title: "Exponential Distribution and CLT"
+author: 'Author: Joohyun Kwon'
 output: html_document
 ---
-#Synopsis
-We will investigate the exponential distribution in R and compare i twith the Central Limit Theorem.
 
-
-```{r setup, include=FALSE}
+```{r setup, include=FALSE, message=FALSE}
 knitr::opts_chunk$set(echo = TRUE)
+#library(ggplot2)
 ```
 
-We run 1000 simulations on generating 40 random numbers from a exponential distribution with lamda value = 0.2. The result is saved to a matrix, called sim, and each row of sim is one simulation. So the sim has 1000 rows and 40 columns.
+##Synopsis
+We will investigate the exponential distribution in R and compare it with the Central Limit Theorem. We run 1000 simulations on generating 40 random numbers from a exponential distribution with lamda value = 0.2. The mean and variance of these samples will be calculated and then compared to the theoretical value.
+
+
+## Simulation
+We will run 1000 simulation. At each simulation, 40 random numbers will be generated from exponential distribution. These generated number will be saved as a row in a matrix, called sim. So the matrix will have 1000 rows and 40 colums
 
 ```{r}
 n <- 40
@@ -19,23 +23,65 @@ n.of.sim <- 1000
 sim <- matrix(sapply(1:n.of.sim, function(i){rexp(n,lambda)}), n.of.sim,n)
 dim(sim)
 ```
-We calculate the means of each row and save the vector of means to variable means.
+We calculate the means of each row and save the vector of means to variable means. Then the mean of the vector (sample mean) and the standard deviation (standard deviation of sample mean) will be calculated from means vector. The square value of the standard deviation is the variance of sample mean.
 
 ```{r}
 means <- apply(sim, 1, mean)
-hist(means, breaks=40)
 
 mean.of.sim = mean(means)
 sd.of.sim = sd(means)
 pop.sd = sd.of.sim * sqrt(n)
 
+# sample mean
+round(mean.of.sim,2)
+# variance of sample mean
+round(sd.of.sim^2,2)
 ```
-**Mean of simulated sample means: `r mean.of.sim`**
+$$\sigma^{2} = S^{2}*n$$
 
-**SD of simulated sample means: `r sd.of.sim`**
+,where $\sigma^{2}$: population variance, $S^{2}$: variance of sample mean  and $n$: sample size.
 
-**SD of population: `r pop.sd`**
+This sample mean (mean.of.sim) is the mean of mean values of simulated samples. The variance of population devided by sample size, n, is the variance of the sample mean. So the variance of population can be calculated by above equation.
 
-**Theoretical mean: `r 1/lambda`**
+#### Simulated Result
 
-**Theoretical SD: `r 1/lambda`**
+- **Sample mean: `r round(mean.of.sim,2)`** 
+
+- **Populatin Variance: `r round(sd.of.sim^2*n,2)`**
+
+
+#### Theoretical Mean ($1/\lambda$) and Variance ($(1/\lambda)^{2}$)
+
+- **Theoretical Mean: `r 1/lambda`**
+
+- **Theoretical Variance: `r (1/lambda)^2`**
+
+### Conclusion:
+Population mean and variance acquired by 1000 simulation (with 40 samplings) are pretty close to theoretical mean and variance.
+
+# Plot Comparison of Random Sample and Sample Mean Distributions
+
+### Histogram of Random Sample
+```{r}
+sample <- rexp(1000,0.2)
+hist(sample, breaks=40)
+```
+This distribution is not normal. It shows an exponential distribution.
+
+However, the distribution of sample mean shows a normal distribution - it is approximately bell shaped and symmetrical along the middle vertical line.
+
+### Histogram of Sample Mean
+```{r}
+hist(means, breaks=40, xlab="mean")
+```
+
+### Density Plot
+The plot of density of sample mean makes it more clear that the distribution is like normal distribution.
+
+The red line is the sample mean.
+```{r}
+dst <- density(means)
+plot(dst$x, dst$y, type ="n", xlab="mean", ylab="density")
+lines(dst$x, dst$y)
+abline(v=mean.of.sim, col="red", lwd=2)
+```
