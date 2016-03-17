@@ -1,6 +1,6 @@
 ---
 title: "final_growth"
-output: html_document
+author: "Author: Joohyun Kwon"
 ---
 
 ## Load library (ggplot2, datasets) and load ToothGrowth data
@@ -19,11 +19,12 @@ names(ToothGrowth)
 class(ToothGrowth$len)
 class(ToothGrowth$supp) 
 class(ToothGrowth$dose)
-unique(ToothGrowth$supp)
-unique(ToothGrowth$dose)
+summary(ToothGrowth)
 ```
 
 The supp column is a factor and has two levels - VC and OJ. The dose column is numeric but has only 3 different values (0.5, 1, 2.0). So we can take this column as factor too.
+
+## Exploration
 
 We will start by examing impact of each supplement by its dosage. Multipanel boxplot (by supplement) will provide a good glimpse on the data.
 
@@ -31,3 +32,6 @@ We will start by examing impact of each supplement by its dosage. Multipanel box
 g <- ggplot(ToothGrowth, aes(x=factor(dose),y=len, fill=factor(dose)))
 g + geom_boxplot() + facet_grid(.~supp)
 ```
+
+The boxplot show that OJ yield higer growth in lower dosage than VC. However, VC growth increases more as the dosage increases. OJ's growth is not increasing so much as VC's, as the dosage increase. Also. OJ seems to have higher variance in the lower dosage than VC. However, VC seems to have higher variance in the highest dosage.
+
