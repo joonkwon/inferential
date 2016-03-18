@@ -66,15 +66,14 @@ Population mean and variance acquired by 1000 simulation (with 40 samplings) are
 sample <- rexp(1000,0.2)
 hist(sample, breaks=40)
 ```
+
 This distribution is not normal. It shows an exponential distribution.
 
 However, the distribution of sample mean shows a normal distribution - it is approximately bell shaped and symmetrical along the middle vertical line.
 
 ### Histogram of Sample Mean
 ```{r}
-#hist(means, breaks=40, xlab="mean")
-df <- data.frame(means)
-g <-ggplot(df, aes(x=means))
+hist(means, breaks=40, xlab="mean")
 ```
 
 ### Density Plot
