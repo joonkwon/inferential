@@ -72,7 +72,9 @@ However, the distribution of sample mean shows a normal distribution - it is app
 
 ### Histogram of Sample Mean
 ```{r}
-hist(means, breaks=40, xlab="mean")
+#hist(means, breaks=40, xlab="mean")
+df <- data.frame(means)
+g <-ggplot(df, aes(x=means))
 ```
 
 ### Density Plot

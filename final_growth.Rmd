@@ -35,3 +35,14 @@ g + geom_boxplot() + facet_grid(.~supp)
 
 The boxplot show that OJ yield higer growth in lower dosage than VC. However, VC growth increases more as the dosage increases. OJ's growth is not increasing so much as VC's, as the dosage increase. Also. OJ seems to have higher variance in the lower dosage than VC. However, VC seems to have higher variance in the highest dosage.
 
+We will test a null hypothesis that the impact of dosage increase of OJ to tooth lengh is equal to that of VC. Here, based on previous overview, we will propose an alternative hypothesis where the impact of VC is larger than that of OJ to tooth growth. For this, we will compare mean differences of 0.5 and 2 dose between OJ and VC.
+
+```{r}
+oj <- ToothGrowth[ToothGrowth$supp =="OJ",]
+vc <- ToothGrowth[ToothGrowth$supp =="VC",]
+oj.i <- ToothGrowth[ToothGrowth$supp == "OJ" & ToothGrowth$dose == .5,]$len
+oj.f <- ToothGrowth[ToothGrowth$supp == "OJ" & ToothGrowth$dose == 2,]$len
+vc.i <- ToothGrowth[ToothGrowth$supp == "VC" & ToothGrowth$dose == .5,]$len
+vc.f <- ToothGrowth[ToothGrowth$supp == "VC" & ToothGrowth$dose == 2,]$len
+```
+
