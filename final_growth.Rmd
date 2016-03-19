@@ -1,9 +1,10 @@
 ---
 title: "OJ and VC's impact on Tooth Growth"
-author: "Author: Joohyun Kwon"
+author: 'Author: Joohyun Kwon'
+output: pdf_document
 ---
 
-## Overview of ToothGrowth Data
+# Overview of ToothGrowth Data
 
 Load library (ggplot2, datasets) and load ToothGrowth data
 ```{r setup, include=FALSE, message=FALSE}
@@ -23,7 +24,7 @@ unique(ToothGrowth$dose)
 
 The supp column is a factor and has two levels - VC and OJ. The dose column is numeric but has only 3 different values (0.5, 1, 2.0). So we can take this column as factor too.
 
-## Exploration
+# Exploration
 
 We will start by examing impact of each supplement by its dosage. Multipanel boxplot (by supplement) will provide a good glimpse on the data.
 
@@ -34,17 +35,17 @@ g + geom_boxplot() + facet_grid(.~supp)
 
 The boxplot show that OJ yield higer growth in lower dosage than VC. However, VC growth increases more as the dosage increases. OJ's growth is not increasing so much as VC's, as the dosage increase. 
 
-## Hypothesis
+# Hypothesis
 
-We set up hypothesis that at dosage .5 and 1, OJ yields higher tooth growth however, at dosage 2, OJ does the same growth to VC. 
+We set up hypothesis that at dosage .5 and 1, OJ yields higher tooth growth. However, at dosage 2, OJ does the same growth to VC. 
 
-In order to test this, we will have a null hypothesis at each dosage level that OJ's tooth growth contribution will be the same to that of VC's. We will examine this hypothesis through t test on mean differences at each dosage.
+In order to test this, we will have a null hypothesis at each dosage level that OJ's tooth growth contribution will be the same to that of VC's. We will examine this hypothesis through t-test on mean differences at each dosage.
 
-## T-Test
+# T-Test
 
 We will examine mean difference of two groups at each dosage level. Variance will be assumed equal across groups and paired test will be false since there is no way to identify subject. Also, this will be one-sided test since our alternative hypothesis is that OJ yields higher growth. The confidence level will be the default 0.95.
 
-#### Group the Data by Supp and Dose
+### Group the Data by Supp and Dose
 
 ```{r}
 oj.5 <- ToothGrowth[ToothGrowth$supp =="OJ" & ToothGrowth$dose == .5 ,]
@@ -56,25 +57,26 @@ vc2 <- ToothGrowth[ToothGrowth$supp =="VC" & ToothGrowth$dose == 2 ,]
 library(stats)
 ```
 
-#### 1. Dosage 0.5 Test
+
+### 1. Dosage 0.5 Test
 
 ```{r}
 t.test(oj.5$len, vc.5$len, var.equal = TRUE, paired = FALSE, alternative = "greater" )
 ```
 
-#### 2. Dosage 1 Test
+### 2. Dosage 1 Test
 
 ```{r}
 t.test(oj1$len, vc1$len, var.equal = TRUE, paired = FALSE, alternative = "greater" )
 ```
 
-#### 3. Dosage 2 Test
+### 3. Dosage 2 Test
 
 ```{r}
 t.test(oj2$len, vc2$len, var.equal = TRUE, paired = FALSE, alternative = "greater" )
 ```
 
-## Conclusion
+# Conclusion
 
 - for dosage .5, the test rejects null hypothesis that OJ's impact on tooth growth is equal to VC's and we can accept the alternate hypothesis that OJ's impact is larger than VC's at confidence interval [2.377886, Inf]
 
@@ -82,7 +84,7 @@ t.test(oj2$len, vc2$len, var.equal = TRUE, paired = FALSE, alternative = "greate
 
 - for dosage 2, the test rejects null hypothesis that OJ's impact on tooth growth is equal to VC's and we cannot accept the alternate hypothesis that OJ's impact is larger than VC's at confidence interval [-3.086866, Inf]
 
-## Assumption
+# Assumption
 
 As stated earlier, we assumed below for the tests:
 
