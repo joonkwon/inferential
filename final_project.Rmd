@@ -1,7 +1,7 @@
 ---
 title: "Exponential Distribution and CLT"
 author: 'Author: Joohyun Kwon'
-output: html_document
+output: pdf_document
 ---
 
 ```{r setup, include=FALSE, message=FALSE}
@@ -84,19 +84,23 @@ The theoretical mean of normal distribution should be the population mean and th
 
 $$ S = \sigma / \sqrt(n) $$
 
+We made a histrogram from the density of above sample mean. Then we overlaid on it a line plot of the density function with the theoretical mean and standard deviation.
+
+The plot of theoretical density function is in red line.
+
 ```{r}
 df <- data.frame(means)
 library(ggplot2)
 g <- ggplot(df, aes(x=means))
-g <- g + geom_histogram(aes(colour="Simulation",y=..density..), bins=40, col="black", fill="darkgreen", alpha=.3)
+g <- g + geom_histogram(aes(y=..density..), bins=40, col="black", fill="darkgreen", alpha=.3)
 g <- g + geom_vline(xintercept = mean.of.sim, col = "blue", lwd=1)
 g <- g + geom_text(aes(x=mean.of.sim,y=0, label=paste("Sample Mean: ", as.character(round(mean.of.sim,2)))), 
                    angle=90, col="darkred", vjust = -.3, hjust=-0.1 )
 g <- g + xlab("mean")
 
 #Plot Normal Distribution with theoretical mean an sd 
-g <- g + stat_function(aes(colour="Theoretical"), fun = dnorm, 
-                       args = list(mean=1/lambda, sd=1/(lambda*sqrt(n))), col="red")
-g <- g + scale_colour_manual("title", values = c("darkgreen", "red"))
+g <- g + stat_function(fun = dnorm, 
+                       args = list(mean=1/lambda, sd=1/(lambda*sqrt(n))), col="red", lwd=1)
+g <- g + ggtitle("Density - Simulated vs Theoretical")
 g
 ```

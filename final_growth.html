@@ -114,9 +114,9 @@ $(document).ready(function () {
 </div>
 
 
-<div id="load-library-ggplot2-datasets-and-load-toothgrowth-data" class="section level2">
-<h2>Load library (ggplot2, datasets) and load ToothGrowth data</h2>
-<p>Check the overview of the dataset</p>
+<div id="overview-of-toothgrowth-data" class="section level2">
+<h2>Overview of ToothGrowth Data</h2>
+<p>Load library (ggplot2, datasets) and load ToothGrowth data</p>
 <pre class="r"><code>head(ToothGrowth)</code></pre>
 <pre><code>##    len supp dose
 ## 1  4.2   VC  0.5
@@ -133,16 +133,11 @@ $(document).ready(function () {
 ## 58 27.3   OJ    2
 ## 59 29.4   OJ    2
 ## 60 23.0   OJ    2</code></pre>
-<pre class="r"><code>dim(ToothGrowth)</code></pre>
-<pre><code>## [1] 60  3</code></pre>
-<pre class="r"><code>names(ToothGrowth)</code></pre>
-<pre><code>## [1] &quot;len&quot;  &quot;supp&quot; &quot;dose&quot;</code></pre>
-<pre class="r"><code>class(ToothGrowth$len)</code></pre>
-<pre><code>## [1] &quot;numeric&quot;</code></pre>
-<pre class="r"><code>class(ToothGrowth$supp) </code></pre>
-<pre><code>## [1] &quot;factor&quot;</code></pre>
-<pre class="r"><code>class(ToothGrowth$dose)</code></pre>
-<pre><code>## [1] &quot;numeric&quot;</code></pre>
+<pre class="r"><code>str(ToothGrowth)</code></pre>
+<pre><code>## 'data.frame':    60 obs. of  3 variables:
+##  $ len : num  4.2 11.5 7.3 5.8 6.4 10 11.2 11.2 5.2 7 ...
+##  $ supp: Factor w/ 2 levels &quot;OJ&quot;,&quot;VC&quot;: 2 2 2 2 2 2 2 2 2 2 ...
+##  $ dose: num  0.5 0.5 0.5 0.5 0.5 0.5 0.5 0.5 0.5 0.5 ...</code></pre>
 <pre class="r"><code>summary(ToothGrowth)</code></pre>
 <pre><code>##       len        supp         dose      
 ##  Min.   : 4.20   OJ:30   Min.   :0.500  
@@ -151,6 +146,8 @@ $(document).ready(function () {
 ##  Mean   :18.81           Mean   :1.167  
 ##  3rd Qu.:25.27           3rd Qu.:2.000  
 ##  Max.   :33.90           Max.   :2.000</code></pre>
+<pre class="r"><code>unique(ToothGrowth$dose)</code></pre>
+<pre><code>## [1] 0.5 1.0 2.0</code></pre>
 <p>The supp column is a factor and has two levels - VC and OJ. The dose column is numeric but has only 3 different values (0.5, 1, 2.0). So we can take this column as factor too.</p>
 </div>
 <div id="exploration" class="section level2">
